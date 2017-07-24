@@ -1,6 +1,7 @@
 <?php
+// add yahoo_stock_data function as a shortcode
 add_shortcode( 'stock-data' , 'yahoo_stock_data' ); 
-
+//fetch data from yahoo finance and store in database
 function yahoo_stock_data(){
 	
 	$cur_time= current_time('timestamp'); 
@@ -26,7 +27,9 @@ function yahoo_stock_data(){
 }
 	$diff= $cur_time-$past_time;
 	
+	// if time difference is greater than 15 minutes
 	if($diff>900){
+		
 	$data = file_get_contents("http://quote.yahoo.com/d/quotes.csv?s=PREV.CN&f=l1hkbvogjac1");
 	$rows = explode("\n",$data);
 	$s = array();
@@ -47,6 +50,7 @@ function yahoo_stock_data(){
 
 	global $wpdb;
 	
+	//wpdb->update( string $table, array $data, array $where)
 	$wpdb->update('wpxp_stockdata', array( 
 			'last' => $last,	
 			'high' => $high,
@@ -60,8 +64,8 @@ function yahoo_stock_data(){
 			'value_change' => $change,
 			'lastupdate' => $cur_time	
 		), array( 'stock_id' => 1 ) );
-	}
-
+	} // end if
+	// Two tables to show the stock data on investors page
 	$content= "<div class='stock-data share-price'><table class='nz-table alignleft'>
 	<tbody>
 	<tr><td> Last</td><td>".$last."</td></tr><tr><td> High</td><td> ".$high."</td></tr>
@@ -79,6 +83,6 @@ function yahoo_stock_data(){
 	</div>";
 	return $content;
 	
-}
+}// end function 
 
 ?>
