@@ -1,4 +1,4 @@
-# Fetch-stock-data-from-yahoo
+# fetch-stock-data-from-yahoo-using-wordpress
 
-Fetching stock data from yahoo using Wordpress
+Fetching stock data from yahoo using Wordpress shortcode.
 
